@@ -1,0 +1,23 @@
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        words = s.split(" ")
+        
+        if len(pattern) != len(words):
+            return False
+            
+        char_to_word = {}
+        used_words = set()
+        
+        for char, word in zip(pattern, words):
+            if char in char_to_word:
+                # Character seen before: ensure it matches the same word
+                if char_to_word[char] != word:
+                    return False
+            else:
+                # Character is new: ensure the word hasn't already been claimed
+                if word in used_words:
+                    return False
+                char_to_word[char] = word
+                used_words.add(word)
+                
+        return True
